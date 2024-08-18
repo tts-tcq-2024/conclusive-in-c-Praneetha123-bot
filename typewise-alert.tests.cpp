@@ -2,7 +2,8 @@
 #include "typewise-alert.h"
 
 TEST(TypeWiseAlertTestSuite,InfersBreachBelowLowerLimits) {
-   checkAndAlert(TO_CONTROLLER, batteryChar, temperatureInC);
+   BatteryCharacter batteryChar = { PASSIVE_COOLING, "TestBrand" };
+   checkAndAlert(TO_CONTROLLER, batteryChar, 30);
 }
 
 // TEST(TypeWiseAlertTestSuite,InfersBreachAboveUpperLimits) {
