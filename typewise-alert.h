@@ -1,6 +1,5 @@
 #pragma once
 
-// Define enums for CoolingType, BreachType, and AlertTarget
 typedef enum {
   PASSIVE_COOLING,
   HI_ACTIVE_COOLING,
@@ -18,19 +17,27 @@ typedef enum {
   TO_EMAIL
 } AlertTarget;
 
-// Define the BatteryCharacter struct
 typedef struct {
   CoolingType coolingType;
   char brand[48];
 } BatteryCharacter;
 
-// Function prototypes for breach inference and alert handling
+// Function to infer breach type based on limits
 BreachType inferBreach(double value, double lowerLimit, double upperLimit);
+
+// Function to classify temperature based on cooling type
 BreachType classifyTemperatureBreach(CoolingType coolingType, double temperatureInC);
 
-// Function prototypes for alerting
-void sendToController(BreachType breachType);
-void sendToEmail(BreachType breachType);
+// Function to handle alerting based on the alert target
+void performAlert(AlertTarget alertTarget, BreachType breachType);
 
-// Main function prototype
-void checkAndAlert(AlertTarget alertTarget, BatteryCharacter batteryChar, double temperatureInC);
+// Function to check temperature and send alerts
+void checkAndAlert(
+    AlertTarget alertTarget,
+    BatteryCharacter batteryChar,
+    double temperatureInC
+);
+
+// Helper functions for checking and alerting
+BreachType determineBreachType(CoolingType coolingType, double temperatureInC);
+void triggerAlert(AlertTarget alertTarget, BreachType breachType);
