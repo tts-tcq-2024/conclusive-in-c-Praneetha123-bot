@@ -50,6 +50,6 @@ TEST(TypeWiseAlertTestSuite, HandlesInvalidCoolingType) {
 
 TEST(TypeWiseAlertTestSuite, HandlesInvalidCoolingType) {
     BatteryCharacter batteryChar = { (CoolingType)100, "TestBrand" }; // Invalid CoolingType
-    checkAndAlert((alertTarget)100, batteryChar, 30); // Test with a temperature within valid range
+    checkAndAlert((AlertTarget)100, batteryChar, 30); // Test with a temperature within valid range
 }
 
