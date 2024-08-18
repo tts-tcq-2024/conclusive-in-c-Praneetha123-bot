@@ -50,5 +50,5 @@ TEST(TypeWiseAlertTestSuite, HandlesInvalidCoolingType) {
 
 TEST(TypeWiseAlertTestSuite, HandlesInvalidalertTarget) {
     BatteryCharacter batteryChar = { PASSIVE_COOLING, "TestBrand" };
-    checkAndAlert(100, batteryChar, 50.0); // Temperature above 35°C
+    checkAndAlert((AlertTarget)100, batteryChar, 50.0); // Temperature above 35°C
 }
