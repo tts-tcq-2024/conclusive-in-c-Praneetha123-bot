@@ -42,3 +42,8 @@ TEST(TypeWiseAlertTestSuite, CheckTooHighTemperatureToEmail) {
     BatteryCharacter batteryChar = { PASSIVE_COOLING, "TestBrand" };
     checkAndAlert(TO_EMAIL, batteryChar, 50.0); // Temperature above 35°C
 }
+
+TEST(TypeWiseAlertTestSuite, HandlesInvalidCoolingType) {
+    BatteryCharacter batteryChar = { (CoolingType)100, "TestBrand" }; // Invalid CoolingType
+    checkAndAlert(TO_CONTROLLER, batteryChar, 30); // Test with a temperature within valid range
+}
