@@ -8,25 +8,19 @@ BreachType inferBreach(double value, double lowerLimit, double upperLimit) {
   return NORMAL;
 }
 
-// Implementation of classification functions
-BreachType classifyPassiveCooling(double temperatureInC) {
-  return inferBreach(temperatureInC, 0, 35);
+// Function to determine the upper limit based on cooling type
+double getUpperLimit(CoolingType coolingType) {
+  if (coolingType == PASSIVE_COOLING) return 35;
+  if (coolingType == HI_ACTIVE_COOLING) return 45;
+  if (coolingType == MED_ACTIVE_COOLING) return 40;
+  return 0; // Default case for invalid cooling type
 }
 
-BreachType classifyHiActiveCooling(double temperatureInC) {
-  return inferBreach(temperatureInC, 0, 45);
-}
-
-BreachType classifyMedActiveCooling(double temperatureInC) {
-  return inferBreach(temperatureInC, 0, 40);
-}
-
-// Classification function based on CoolingType
-BreachType classifyTemperatureBreach(CoolingType coolingType, double temperatureInC) {
-  if (coolingType == PASSIVE_COOLING) return classifyPassiveCooling(temperatureInC);
-  if (coolingType == HI_ACTIVE_COOLING) return classifyHiActiveCooling(temperatureInC);
-  if (coolingType == MED_ACTIVE_COOLING) return classifyMedActiveCooling(temperatureInC);
-  return NORMAL; // Default case
+// Function to classify temperature based on cooling type
+BreachType classifyTemperature(double temperatureInC, CoolingType coolingType) {
+  double upperLimit = getUpperLimit(coolingType);
+  double lowerLimit = 0; // Default lower limit
+  return inferBreach(temperatureInC, lowerLimit, upperLimit);
 }
 
 // Alerting functions
@@ -48,7 +42,7 @@ void sendToEmail(BreachType breachType) {
 
 // Function to determine breach type
 BreachType determineBreachType(CoolingType coolingType, double temperatureInC) {
-  return classifyTemperatureBreach(coolingType, temperatureInC);
+  return classifyTemperature(temperatureInC, coolingType);
 }
 
 // Function to trigger alert
