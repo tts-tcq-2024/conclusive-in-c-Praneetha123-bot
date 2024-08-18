@@ -8,18 +8,29 @@ BreachType inferBreach(double value, double lowerLimit, double upperLimit) {
   return NORMAL;
 }
 
-// Function to determine the upper limit based on cooling type
-double getUpperLimit(CoolingType coolingType) {
-  if (coolingType == PASSIVE_COOLING) return 35;
-  if (coolingType == HI_ACTIVE_COOLING) return 45;
-  if (coolingType == MED_ACTIVE_COOLING) return 40;
-  return 0; // Default case for invalid cooling type
+// Function to get temperature limits based on cooling type
+void getLimits(CoolingType coolingType, double* lowerLimit, double* upperLimit) {
+  // Define an array of upper limits based on CoolingType
+  static const double upperLimits[] = {
+    35, // PASSIVE_COOLING
+    45, // HI_ACTIVE_COOLING
+    40  // MED_ACTIVE_COOLING
+  };
+  
+  *lowerLimit = 0; // Default lower limit
+  
+  // Check if coolingType is valid and set the upper limit
+  if (coolingType < sizeof(upperLimits)/sizeof(upperLimits[0])) {
+    *upperLimit = upperLimits[coolingType];
+  } else {
+    *upperLimit = 0; // Default case for invalid cooling type
+  }
 }
 
 // Function to classify temperature based on cooling type
 BreachType classifyTemperature(double temperatureInC, CoolingType coolingType) {
-  double upperLimit = getUpperLimit(coolingType);
-  double lowerLimit = 0; // Default lower limit
+  double lowerLimit, upperLimit;
+  getLimits(coolingType, &lowerLimit, &upperLimit);
   return inferBreach(temperatureInC, lowerLimit, upperLimit);
 }
 
